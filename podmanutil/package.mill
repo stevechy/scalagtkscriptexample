@@ -1,0 +1,8 @@
+package build.podmanutil
+
+import mill.*
+import scalalib.*
+
+object `package` extends build.Scala3GtkAppModule {
+
+}

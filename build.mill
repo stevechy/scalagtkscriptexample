@@ -1,0 +1,34 @@
+//| mill-jvm-version: 25
+
+package build
+
+import mill.*
+import scalalib.*
+
+
+trait Scala3AppModule extends ScalaModule {
+  def scalaVersion = "3.8.2"
+
+  override def scalacOptions: T[Seq[String]] = Task {
+    super.scalacOptions() ++ Seq()
+  }
+}
+
+
+trait Scala3GtkAppModule extends build.Scala3AppModule {
+
+  def mvnDeps: T[Seq[Dep]] = {
+    Seq(
+      mvn"com.lihaoyi::mainargs:0.7.7",
+      mvn"com.lihaoyi::upickle:4.4.3",
+      mvn"com.lihaoyi::os-lib:0.11.8",
+      mvn"org.java-gi:gtk:1.0.0-RC1",
+    )
+  }
+
+  def forkArgs = {
+    // https://java-gi.org/usage/#compile-and-run
+    Seq("--enable-native-access=ALL-UNNAMED")
+  }
+
+}
